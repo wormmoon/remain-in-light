@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>tracking.js - face with camera</title>
+
+  <style>
+  video, canvas, .overlay {
+    margin-left: 230px;
+    margin-top: 120px;
+    position: absolute;
+  }
+  video {
+    filter: grayscale(1);
+    -webkit-filter: grayscale(1);
+    filter: grayscale(100%);
+  }
+  .overlay {
+    width: 700px;
+    height: 350px;
+    background-color: rgba(0, 163, 255, 0.9);
+    mix-blend-mode: overlay;
+    /* mix-blend-mode: color; */
+    z-index: 100;
+  }
+  canvas {
+    z-index: 200;
+  }
+  </style>
+</head>
+<body>
+  <!-- <div class="demo-title">
+    <p><a href="http://trackingjs.com" target="_parent">tracking.js</a> － get user's webcam and detect faces</p>
+  </div> -->
+
+  <!-- <div class="demo-frame">
+    <div class="demo-container"> -->
+      <div class="overlay" id="overlay"></div>
+      <video id="video" width="700" height="350" preload autoplay loop muted></video>
+    <!-- </div>
+  </div> -->
+
+  <script src="../face-api.min.js"></script>
+  <script src="../index.js"></script>
+
+</body>
+</html>
