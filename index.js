@@ -1,3 +1,5 @@
+import { drawFacePath } from './helpers/drawFacePath.js';
+
 var video = document.getElementById('video');
 
 Promise.all([
@@ -16,15 +18,15 @@ function startVideo() {
 
 video.addEventListener('playing', () => {
   // Set up canvas
-  const canvas = faceapi.createCanvasFromMedia(video)
-  document.body.append(canvas)
-  const displaySize = { width: video.width, height: video.height }
-  faceapi.matchDimensions(canvas, displaySize)
+  const canvas = faceapi.createCanvasFromMedia(video);
+  document.body.append(canvas);
+  const displaySize = { width: video.width, height: video.height };
+  faceapi.matchDimensions(canvas, displaySize);
   // Make detections
   setInterval(async () => {
-    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks()
-    const resizedDetections = faceapi.resizeResults(detections, displaySize)
-    canvas.getContext('2d').clearRect(0,0, canvas.width, canvas.height)
+    const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
+    const resizedDetections = faceapi.resizeResults(detections, displaySize);
+    canvas.getContext('2d').clearRect(0,0, canvas.width, canvas.height);
     // faceapi.draw.drawDetections(canvas, resizedDetections)
     // faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
 
@@ -41,23 +43,23 @@ video.addEventListener('playing', () => {
     // console.log(jawOutline[0]);
     const ctx = canvas.getContext('2d');
     //ctx.globalCompositeOperation = 'source-over';
-    ctx.fillStyle = '#FF372A';
-    let facePath = new Path2D;
-    ctx.beginPath();
-    facePath.moveTo(jawOutline[0].x, jawOutline[0].y);
-    jawOutline.forEach(element => {
-      facePath.lineTo(element.x, element.y);
-    })
+    // ctx.fillStyle = '#FF372A';
+    let facePath = drawFacePath(jawOutline, ctx);
+    // ctx.beginPath();
+    // facePath.moveTo(jawOutline[0].x, jawOutline[0].y);
+    // jawOutline.forEach(element => {
+    //   facePath.lineTo(element.x, element.y);
+    // })
     
-    // Continue the line making more of an oval shape
-    const faceHeight = jawOutline[8].y - jawOutline[0].y;
-    const outsideYCoords = jawOutline[0].y - ((faceHeight / 100) * 30);
-    const insideYCoords = jawOutline[0].y - ((faceHeight / 100) * 36);
-    // Draw lines for top half of face
-    facePath.lineTo(jawOutline[12].x, outsideYCoords);
-    facePath.lineTo(jawOutline[10].x, insideYCoords);
-    facePath.lineTo(jawOutline[7].x, insideYCoords);
-    facePath.lineTo(jawOutline[5].x, outsideYCoords);
+    // // Continue the line making more of an oval shape
+    // const faceHeight = jawOutline[8].y - jawOutline[0].y;
+    // const outsideYCoords = jawOutline[0].y - ((faceHeight / 100) * 30);
+    // const insideYCoords = jawOutline[0].y - ((faceHeight / 100) * 36);
+    // // Draw lines for top half of face
+    // facePath.lineTo(jawOutline[12].x, outsideYCoords);
+    // facePath.lineTo(jawOutline[10].x, insideYCoords);
+    // facePath.lineTo(jawOutline[7].x, insideYCoords);
+    // facePath.lineTo(jawOutline[5].x, outsideYCoords);
 
 
     let leftEyePath = new Path2D;
