@@ -14,8 +14,8 @@ textInput.addEventListener('keyup', function () {
 });
 
 function flipA(text, element) {
-  let newText = text.replace(/A/g, '<span>A</span>');
-  newText = text.replace(/a/g, '<span>a</span>');
+  console.log(text);
+  let newText = text.replace(/A/gi, '<span>A</span>');
 
   element.innerHTML = newText;
 }
