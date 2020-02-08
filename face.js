@@ -26,6 +26,10 @@ video.addEventListener('playing', () => {
   document.querySelector('.video-container').append(canvas);
   // Match canvas dimensions to webcam dimensions
   const displaySize = { width: video.width, height: video.height };
+  // Fit overlay over webcam dimensions
+  const overlay = document.querySelector('.overlay');
+  overlay.style.width = displaySize.width + 'px';
+  overlay.style.height = displaySize.height + 'px';
   faceapi.matchDimensions(canvas, displaySize);
 
   /* DETECTIONS 

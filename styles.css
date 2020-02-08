@@ -14,8 +14,8 @@ video {
 }
 
 .overlay {
-  width: 700px;
-  height: 394px;
+  /* width: 700px;
+  height: 394px; */
   background-color: rgba(0, 163, 255, 0.9);
   mix-blend-mode: overlay;
   /* mix-blend-mode: color; */
