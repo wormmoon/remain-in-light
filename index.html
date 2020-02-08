@@ -14,10 +14,12 @@
     filter: grayscale(1);
     -webkit-filter: grayscale(1);
     filter: grayscale(100%);
+    width: 700px;
+    height: 400px;
   }
   .overlay {
     width: 700px;
-    height: 350px;
+    height: 394px;
     background-color: rgba(0, 163, 255, 0.9);
     mix-blend-mode: overlay;
     /* mix-blend-mode: color; */
@@ -30,7 +32,7 @@
 </head>
 <body>
   <div class="overlay" id="overlay"></div>
-  <video id="video" width="700" height="350" preload autoplay loop muted></video>
+  <video id="video" preload autoplay loop muted></video>
 
   <script src="../face-api.min.js"></script>
   <script src="../index.js"></script>
