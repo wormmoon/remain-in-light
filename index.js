@@ -1,5 +1,5 @@
 // Get video element
-var video = document.getElementById('video');
+const video = document.getElementById('video');
 
 // Load models
 Promise.all([
@@ -23,7 +23,7 @@ video.addEventListener('playing', () => {
     -------------- */
   const canvas = faceapi.createCanvasFromMedia(video);
   // Add to DOM
-  document.body.append(canvas);
+  document.querySelector('.video-container').append(canvas);
   // Match canvas dimensions to webcam dimensions
   const displaySize = { width: video.width, height: video.height };
   faceapi.matchDimensions(canvas, displaySize);

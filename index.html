@@ -4,37 +4,20 @@
   <meta charset="utf-8">
   <title>REMAIN IN LIGHT</title>
 
-  <style>
-  video, canvas, .overlay {
-    margin-left: 230px;
-    margin-top: 120px;
-    position: absolute;
-  }
-  video {
-    filter: grayscale(1);
-    -webkit-filter: grayscale(1);
-    filter: grayscale(100%);
-    width: 700px;
-    height: 400px;
-  }
-  .overlay {
-    width: 700px;
-    height: 394px;
-    background-color: rgba(0, 163, 255, 0.9);
-    mix-blend-mode: overlay;
-    /* mix-blend-mode: color; */
-    z-index: 100;
-  }
-  canvas {
-    z-index: 200;
-  }
-  </style>
+  <link href="https://fonts.googleapis.com/css?family=Anton&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="overlay" id="overlay"></div>
-  <video id="video" preload autoplay loop muted></video>
+  <div class="text-container">
+    <div class="text">EMILYMAYOLIVER</div>
+    <div class="video-container">
+      <div class="overlay" id="overlay"></div>
+      <video id="video" width="700" height="400" preload autoplay loop muted></video>
+    </div>
+  </div>
 
   <script src="../face-api.min.js"></script>
   <script src="../index.js"></script>
+  <script src="../flipAs.js"></script>
 </body>
 </html>
