@@ -10,7 +10,7 @@ video {
   width: 700px;
   height: 400px;
   position: relative;
-  top: -4px;
+  object-fit: cover;
 }
 
 .overlay {
