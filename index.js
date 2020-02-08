@@ -48,7 +48,7 @@ video.addEventListener('playing', () => {
     const faceHeight = jawOutline[8].y - jawOutline[0].y;
     // Points for extending face upwards a little bit
     const outsideYCoords = jawOutline[0].y - ((faceHeight / 100) * 30);
-    const insideYCoords = jawOutline[0].y - ((faceHeight / 100) * 36);
+    const insideYCoords = jawOutline[0].y - ((faceHeight / 100) * 50);
 
     /* CREATE LANDMARK PATHS
     ------------------------ */
@@ -60,6 +60,11 @@ video.addEventListener('playing', () => {
 
     /* GENERATE RED ELEMENTS
     ------------------------ */
+    // Create base element dimensions (this allows blocks/crosshairs to be sized
+    // relative to the size of the face)
+    // 5% of the width of the face
+    const baseElementDimension = (jawOutline[15].x - jawOutline[0].x) / 100 * 5;
+
     for (var i = 0; i < 420; i++) {
       // Get a random coordinate
       let randomCoordVal = getRandomCoord(jawOutline, insideYCoords);
@@ -74,7 +79,7 @@ video.addEventListener('playing', () => {
         randomCoordVal = getRandomCoord(jawOutline, insideYCoords);
       } else {
         // Create a new crosshair element with that coordinate
-        const crosshair = new RedCrosshair(randomCoordVal, ctx);
+        const crosshair = new RedCrosshair(randomCoordVal, ctx, baseElementDimension);
         // Draw the element on the canvas
         crosshair.draw();
       }
@@ -96,7 +101,7 @@ video.addEventListener('playing', () => {
         randomCoordVal = getRandomCoord(jawOutline, insideYCoords);
       } else {
         // Create a new red block element
-        const block = new RedBlock(randomCoordVal, ctx);
+        const block = new RedBlock(randomCoordVal, ctx, baseElementDimension);
         // Draw the block on the canvas at that coordinate
         block.draw();
       }
@@ -140,19 +145,21 @@ function getLeftEyePath(ctx, resizedDetections) {
   const leftEye = resizedDetections[0].landmarks.getLeftEye();
   // ctx.globalCompositeOperation = 'destination-out';
   // ctx.fillStyle = 'rgba(225,225,225,1)';
+
+  const eyeEnlargementNum = 20;
   
   // Make eye a little bigger
-  leftEye[0].x = leftEye[0].x - 15;
-  leftEye[3].x = leftEye[0].x + 15;
+  leftEye[0].x = leftEye[0].x - eyeEnlargementNum;
+  leftEye[3].x = leftEye[3].x + eyeEnlargementNum;
   
   // Go through each point on the eye and create path
   ctx.beginPath();
   leftEyePath.moveTo(leftEye[0].x, leftEye[0].y);
   leftEye.forEach((element, index) => {
     if (index === 1 || index === 2) {
-      leftEyePath.lineTo(element.x, element.y + 15);
+      leftEyePath.lineTo(element.x, element.y + eyeEnlargementNum/1.5);
     } else if (index === 4 || index === 5) {
-      leftEyePath.lineTo(element.x, element.y - 15);
+      leftEyePath.lineTo(element.x, element.y - eyeEnlargementNum/1.5);
     } else {
       leftEyePath.lineTo(element.x, element.y);
     }
@@ -168,18 +175,20 @@ function getRightEyePath(ctx, resizedDetections) {
   // ctx.globalCompositeOperation = 'destination-out';
   // ctx.fillStyle = 'rgba(225,225,225,1)';
 
+  const eyeEnlargementNum = 20;
+
   // Make eye a little bigger
-  rightEye[0].x = rightEye[0].x - 15;
-  rightEye[3].x = rightEye[0].x + 15;
+  rightEye[0].x = rightEye[0].x - eyeEnlargementNum;
+  rightEye[3].x = rightEye[3].x + eyeEnlargementNum;
 
   // Go through each point on the eye and create path
   ctx.beginPath();
   rightEyePath.moveTo(rightEye[0].x, rightEye[0].y);
   rightEye.forEach((element, index) => {
     if (index === 1 || index === 2) {
-      rightEyePath.lineTo(element.x, element.y + 15);
+      rightEyePath.lineTo(element.x, element.y + eyeEnlargementNum/1.5);
     } else if (index === 4 || index === 5) {
-      rightEyePath.lineTo(element.x, element.y - 15);
+      rightEyePath.lineTo(element.x, element.y - eyeEnlargementNum/1.5);
     } else {
       rightEyePath.lineTo(element.x, element.y);
     }
@@ -224,8 +233,8 @@ function getMouthPath(ctx, resizedDetections) {
 
 
 // Create red block
-function RedBlock(middleCoord, ctx) {
-  this.blockDimensions = (Math.random() + 1) * 4.5;
+function RedBlock(middleCoord, ctx, baseElementDimension) {
+  this.blockDimensions = (Math.random() + 1) * (baseElementDimension/1.3);
   this.blockHalfDimensions = this.blockDimensions/2;
   this.middleCoord = middleCoord;
 
@@ -241,10 +250,10 @@ function RedBlock(middleCoord, ctx) {
 };
 
 // Create red crosshair
-function RedCrosshair(middleCoord, ctx) {
+function RedCrosshair(middleCoord, ctx, baseElementDimension) {
   this.middleCoord = middleCoord;
 
-  const crosshairDimensions = 8;
+  const crosshairDimensions = baseElementDimension;
   const crosshairHalfDimensions = crosshairDimensions/2;
 
   this.draw = function() {
